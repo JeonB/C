@@ -1,10 +1,12 @@
+// <C 프로그래밍 2019 기말 프로젝트 : 문제은행 시스템>
+
 #define _CRT_SECURE_NO_WARNINGS //fopen 보안경고로 인한 컴파일 오류 방지
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
 #define N 100
 
+// 문제은행의 문제를 저장하는 구조체
 typedef struct {
 	char problem[N];
 	char example1[N];
@@ -14,11 +16,17 @@ typedef struct {
 	int answer;
 }problem_bank;
 
-
+// 랜덤 문제의 번호와 정오를 저장하는 구조체
+typedef struct {
+	int number;
+	int correct;
+	int incorrect;
+}random_problem;
 
 int main()
 {
-	int choice=0, i=0;
+	int choice = 0, i = 0;  // i는 문제 수를 체크하는 변수
+	char enter;
 	problem_bank s[N];
 	FILE *fp = fopen("문제은행.txt", "r");
 	srand(time(NULL)); // 현재 시각을 기준으로 난수를 생성하게 해주는 함수 
@@ -26,6 +34,7 @@ int main()
 	if (fp == NULL)
 	{
 		printf("이 파일은 존재하지 않습니다\n");
+		exit(1);
 	}
 
 	printf("[1]문제 학습    [2] 문제 연습\n");
@@ -39,11 +48,12 @@ int main()
 		while (!feof(fp))
 		{
 			
+
 			fgets(s[i].problem, N, fp);
 			printf("[문제 %d] %s", i, s[i].problem);
 
 			fgets(s[i].example1, N, fp);
-			printf("1) %s",s[i].example1);
+			printf("1) %s", s[i].example1);
 
 			fgets(s[i].example2, N, fp);
 			printf("2) %s", s[i].example2);
@@ -53,65 +63,94 @@ int main()
 
 			fgets(s[i].example4, N, fp);
 			printf("4) %s", s[i].example4);
-
-			s[i].answer = (int *)malloc(sizeof(int) * 1);
-			fscanf_s(fp, "%d", &s[i].answer);
+			
+			fscanf(fp, "%d%c", &s[i].answer, &enter); // enter 변수는 fscanf 오류 해결 해주는 데 사용. 의미x
 			printf("[정답] %d\n\n", s[i].answer);
-			
-			
+
 			i++;
-			
 		}
 		printf("전체 문제 수 = %d\n", i);
-					
+
 	}
-	
+
+
 	if (choice == 2)
 	{
+		
+		int random, is_correct = 0,j = 0 ,m=0;
+		int count_answer=0, total_p=0;  //정답 개수와 전체 문제 수를 나타내는 변수
+		int total_time = 0; // 문제 푸는 소요시간 변수
+		random_problem k[N]; // 랜덤 문제의 번호와 정오를 저장하는 구조체
 
-		int random,j=0;
-		char answer=0;
+		clock_t start = clock(); // 문제 푸는 소요시간을 측정하기 위한 함수, 시작
 
+		//problem_bank 구조체에 문제와 정답 입력
 		while (!feof(fp))
 		{
-
 			fgets(s[i].problem, N, fp);
 			fgets(s[i].example1, N, fp);
 			fgets(s[i].example2, N, fp);
 			fgets(s[i].example3, N, fp);
 			fgets(s[i].example4, N, fp);
-			fgets(s[i].answer, N, fp);
-		
+			fscanf(fp, "%d%c", &s[i].answer, &enter);
 			i++;
-
 		}
-		
+
+		//랜덤 문제 생성하는 반복문
 		while (1)
 		{
-			random = rand() % i;
-			printf("[문제 ] %s",  s[random].problem);
+			random = rand() % i; // 0~9의 랜덤한 수
+			printf("[문제] %s", s[random].problem);
 			printf("1) %s", s[random].example1);
 			printf("2) %s", s[random].example2);
 			printf("3) %s", s[random].example3);
 			printf("4) %s", s[random].example4);
 			printf("답 : ");
-			scanf("%s", &answer);
-			printf("%s\n", s[random].answer);
+			scanf("%d", &is_correct);
 			
-			if (s[random].answer == answer)
+
+			if (s[random].answer == is_correct)
 			{
 				printf("정답입니다!\n");
+				total_p++; //전체 문제 수 카운트
+				count_answer++; //정답 수 증가
+				k[m].number = random;
+				k[m].correct = 1;
+				k[m].incorrect = 0;
+				m++;
 				printf("계속<0> vs 중단<-1> => ");
 				scanf("%d", &j);
+				printf("\n");
 				if (j == -1)
 					break;
+				else if (j == 0)
+					continue;
 			}
-			
-
+			else
+				printf("오답입니다! 정답은 %d번 입니다. \n",s[random].answer);
+				total_p++; //전체 문제 수 카운트
+				k[m].number = random;
+				k[m].correct = 0;
+				k[m].incorrect = 1;
+				m++;
+				printf("계속<0> vs 중단<-1> => ");
+				scanf("%d", &j);
+				printf("\n");
+				if (j == -1)
+					break;
+				else if (j == 0)
+					continue;
 		}
-	
+		clock_t end = clock(); // 문제 푸는 소요시간을 측정하기 위한 함수, 끝
+		printf("< 분석 결과 >\n");
+		printf("소요시간 : %0.2lf초\n", (double)(end - start) / CLOCKS_PER_SEC);
+		printf("스코어 : %d/%d\n", count_answer, total_p);
+		printf("번호   O   X\n");
+		printf("-------------\n");
+		for(i=0;i< total_p;i++)
+		printf("%3d    %d   %d\n", k[i].number, k[i].correct, k[i].incorrect);
 	}
-
+	
 	fclose(fp);
 	return 0;
 }

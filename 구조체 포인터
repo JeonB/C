@@ -1,0 +1,61 @@
+#include <stdio.h>
+
+//날짜 구조체 정의
+typedef struct
+{
+	int y, m, d;
+}date;
+
+//학생 구조체 정의
+typedef struct  //main 함수 안에  struct 키워드 없이 "student"라는 이름의 구조체 사용가능
+{
+	char name[20]; //이름
+	int year; //학년
+	double gpa; //평점
+	date dob; //생년월일 date of birthday
+}student;
+//typedef struct student student;
+
+
+
+//student형의 변수의 각 멤버를 출력하는 void 함수
+void print_student(student s)
+{
+	printf("이름 : %s\n", s.name);
+	printf("학년 : %d\n", s.year);
+	printf("평점 : %.2lf\n", s.gpa);
+	printf("생년월일 : %4d/%02d/%02d \n", s.dob.y,s.dob.m,s.dob.d);
+}
+
+
+//student형 변수의 학년과 평점을 수정하는 void함수
+void change_student(student *ps)
+{
+	ps->year = 3;    //구조체 포인터 -> 멤버
+	ps->gpa = 4.11;
+}
+
+int main()
+{
+	student st = { "김한신", 2, 3.58, 2000,12,25 }; //구조체에 정의한 순서대로 입력 
+	//student myself;
+
+	//입력
+	/*printf("자신의 정보를 입력하시오. (이름,학년,평점)\n");
+	gets(st.name); // ("%s %d %lf", &st.name, &st.year, &st.gpa);
+	scanf("%d", &st.year);
+	scanf("%lf", &st.gpa);
+	*/
+	printf("\n");
+
+	//출력
+	print_student(st);
+	//print_student(myself);
+
+
+	//수정 후 출력
+	change_student(&st); //값에 의한 호출이 일어나서 수정 안 됨. 값을 바꾸고 싶으면 구조체 포인터 사용
+	print_student(st);
+
+	return 0;
+}

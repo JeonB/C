@@ -1,0 +1,80 @@
+/*입력한 연월일이 입력한 해 기준으로 그 해의 몇번째 날인지 구하는 프로그램*/
+
+#include <stdio.h>
+
+
+int is_leap(int y);					  //윤년인지 판별하는 함수
+int total_days(int y, int m, int d); // 올해로부터 몇번째 날인지 구하는 함수
+
+
+int main()
+{
+	int year, month, day; 
+	int what_day; //올해로부터 몇번째 날?
+
+	printf("년 : ");
+	scanf("%d", &year);
+	printf("월 : ");
+	scanf("%d", &month);
+	printf("일 : ");
+	scanf("%d", &day);
+
+
+	what_day = total_days(year, month, day);
+	printf("\n올해의 %d번째 날\n", what_day);
+
+
+	return 0;
+}
+
+
+//올해로부터 몇번째 날인지 구하는 함수
+int total_days(int y, int m, int d)
+{
+	int i;
+	int	total_m = 0, result = 0;
+	int month[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+
+	if (is_leap(y) == 1)
+	{
+		month[2] += 1; // 윤년의 2월은 29일
+
+		if (m == 1)
+		{
+			return d;
+		}
+		else
+		{
+			for (i = 1; i < m; i++)
+			{
+				total_m += month[i];
+			}
+			result = total_m + d;
+
+			return result;
+		}
+	}
+	else
+		if (m == 1)
+		{
+			return d;
+		}
+		else
+		{
+			for (i = 1; i < m; i++)
+			{
+				total_m += month[i];
+			}
+			result = total_m + d;
+
+			return result;
+		}
+
+}
+
+
+//윤년인지 판별하는 함수
+int is_leap(int y)
+{
+	return ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0);
+}

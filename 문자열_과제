@@ -1,0 +1,43 @@
+#define _CRT_SECURE_NO_WARNINGS 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define N 80
+
+int main()
+{
+	int n = 0;
+	char id[N]="";
+	char domain[N]="";
+
+
+	printf("아이디 : ");
+	gets(id);
+	printf("도메인 선택 : ");
+	scanf("%d", &n);
+
+	switch (n)
+	{
+	case 1:
+		strcpy(domain, "@naver.com");
+		break;
+	case 2:
+		strcpy(domain, "@gmail.com");
+		break;
+	case 3:
+		strcpy(domain, "@hs.ac.kr.com");
+		break;
+	case 4:
+		printf("도메인 직접입력:");
+		strcat(id, "@");
+		scanf("%s", domain);
+		break;
+
+	}
+	printf("email : %s\n", strcat(id, domain));
+	
+
+
+
+	return 0;
+}

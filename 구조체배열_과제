@@ -1,3 +1,4 @@
+/*아이드를 중복체크하고 회원정보를 입출력하는 프로그램*/
 #include <stdio.h>
 #include <string.h>
 

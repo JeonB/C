@@ -1,0 +1,46 @@
+//아티스트(그룹)의 이름으로 검색하면, 데뷔년도와 대표곡을 출력하는 프로그램
+#include <stdio.h>
+#include <string.h>
+
+#define N 5
+
+typedef struct
+{ 
+	char name[15];
+	int debut_y; //데뷔년도
+	char title_song[15];
+}artist;
+
+void artist_info(artist pn);
+
+int main()
+{
+	int i;
+
+	artist  p[N] = { { "태연",2007,"why" }, { "아이유",2008,"Love poem" },{ "헤이즈",2014,"And July" }, { "이수",2000,"어디에도" },{ "한동근",2014,"그대라는 사치" } };
+	
+	while (1)
+	{
+		printf("좋아하는 아티스트의 이름을 입력하시오.\n");
+		gets(p[N].name);
+
+		for (i = 0 ; i < N ; i++)
+		{
+			if (strcmp(p[i].name, p[N].name) == 0)
+			{
+				artist_info(p[i]);
+			}
+		}
+		printf("\n\n\n");
+	}
+	
+
+	return 0;
+}
+
+
+//아티스트(그룹)의 이름으로 검색하면, 데뷔년도와 대표곡을 출력하는 함수
+void artist_info(artist pn)
+{
+	printf("데뷔년도 : %d,  대표곡 : %s", pn.debut_y, pn.title_song);
+}

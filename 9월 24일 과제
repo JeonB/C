@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#define G 9.8 //절대 안 바뀌는 변수는 정의 처리
+
+
+//속도(v, 단위:km/h)와 마찰계수(mu)에 대하여 제동거리를 반환하는 함수
+double break_dist(double v, double mu)
+{
+	double d; //제동거리
+	double m_s; //초속km_h
+	m_s = v * 1000 / 3600;
+	d = (pow(m_s, 2)) / (2 * mu * G);
+
+	return d;
+}
+
+int main()
+{
+	double km_h = 0; //시속
+	double mu = 0; // 마찰계수
+	double d = 0; //제동거리
+	int choice = 0; //타입 번호 
+
+
+	
+	printf("1)과 2) 중 원하는 타입의 번호를 입력하시오 : ");
+	scanf("%d", &choice);
+
+
+	if (choice == 1)
+	{
+		printf("시속(km/h)을 입력하시오: ");
+		scanf(" %lf", &km_h);
+		printf("마찰계수(mu)를 입력하시오: "); //마찰계수(mu)는 0<mu<1의 범위를 가진다.
+		scanf(" %lf", &mu);
+
+		if (mu < 0 || mu>1) //마찰계수가 정해진 범위를 초과할 시 오류메시지 출력
+		{
+			printf("Error!!\n");
+			exit(1);
+		}
+
+		d = break_dist(km_h, mu);
+		printf("제동거리(m) : %.2lf\n", d);
+	}
+
+	else if (choice == 2)
+	{
+		printf("마찰계수(mu)를 입력하시오: "); //마찰계수(mu)는 0<mu<1의 범위를 가진다.
+		scanf(" %lf", &mu);
+		printf("\n");
+
+
+		if (mu < 0 || mu>1) //마찰계수가 정해진 범위를 초과할 시 오류메시지 출력
+		{
+			printf("Error!!\n");
+			exit(1);
+		}
+
+		printf("------------------------------\n");
+		printf("|  시속(km/h) |   제동거리(m)|\n");
+		printf("------------------------------\n");
+		for (km_h = 50; km_h < 210; km_h += 10)
+		{
+			d = break_dist(km_h, mu);
+			printf("|%8.0lf     |  %9.2lf   |\n", km_h, d);
+		}
+		printf("------------------------------\n");
+	}
+
+
+	return 0;
+}

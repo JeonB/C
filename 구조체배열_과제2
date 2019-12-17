@@ -11,13 +11,13 @@ typedef struct
 	char title_song[15];
 }artist;
 
-void artist_info(artist pn);
+void artist_info(artist pn); //아티스트(그룹)의 이름으로 검색하면, 데뷔년도와 대표곡을 출력하는 함수
 
 int main()
 {
 	int i;
 
-	artist  p[N] = { { "태연",2007,"why" }, { "아이유",2008,"Love poem" },{ "헤이즈",2014,"And July" }, { "이수",2000,"어디에도" },{ "한동근",2014,"그대라는 사치" } };
+	artist  p[N+1] = { { "태연 ",2007,"why" }, { "아이유 ",2008,"Love poem" },{ "헤이즈 ",2014,"And July" }, { "이수 ",2000,"어디에도" },{ "한동근 ",2014,"그대라는 사치" }, }; //정확한 한글 출력을 위해 공백문자 삽입
 	
 	while (1)
 	{

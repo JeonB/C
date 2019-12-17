@@ -64,7 +64,7 @@ int main()
 			fgets(s[i].example4, N, fp);
 			printf("4) %s", s[i].example4);
 
-			fscanf(fp, "%d%c", &s[i].answer, &enter); // enter 변수는 fscanf 오류 해결 해주는 데 사용. 의미x
+			fscanf(fp, "%d%c", &s[i].answer, &enter); // enter 변수는 텍스트파일의 개행문자를 저장.
 			printf("[정답] %d\n\n", s[i].answer);
 
 			i++;

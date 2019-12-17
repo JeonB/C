@@ -1,4 +1,4 @@
-/*아이디를 중복체크하고 회원정보를 입출력하는 프로그램*/
+//실습과제
 #include <stdio.h>
 #include <string.h>
 
@@ -32,19 +32,18 @@ int main()
 		{
 			
 			printf("아이디 : "); while (getchar() != '\n');  gets(s[n].id);  //gets 누락 현상 해결 >> 2015버전 이후부터 while (getchar() != '\n'); 사용
-			n++;
-
-			if (n > 1)
+			/*아이디 중복체크하는 조건문*/
+			if (n > 0)
 			{
-				for (i = n; 1 < i; i--)
-					if (strcmp(s[n - 1].id, s[n - i].id) == 0)
+				for (i = n; 0 < i; i--)
+					if (strcmp(s[n].id, s[n - i].id) == 0)
 						{
 							printf("아이디 중복!!\n");
 							exit(1);
 						}
 			}
-
-			printf("나이 : "); scanf(" %d", &s[n-1].age);
+			printf("나이 : "); scanf(" %d", &s[n].age);
+			n++;
 			printf("\n");
 		}
 

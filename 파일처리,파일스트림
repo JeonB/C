@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int main()
+{
+	char fname[20] = "poem.txt";
+	char fname2[20] = "poem_copy.txt";
+
+	FILE *ifp = NULL; //읽기용 파일 포인터
+	FILE *ofp = NULL; //쓰기용 파일 포인터
+	char buffer[80]="";
+	char c = 0;
+
+	ifp = fopen(fname, "r");
+	if (ifp == NULL)
+	{
+		printf("%s 파일이 존재하지 않습니다.\n" ,fname);
+		exit(1);
+	}
+	ofp = fopen(fname2, "w");
+
+	/*한 줄 단위 복사하는 방법
+	while (fgets(buffer, 80, ifp)!=NULL)
+	{
+		fputs(buffer, ofp);
+	}
+	*/
+
+/*	//한 글자씩 복사하는 방법
+	while (1)
+	{
+		c = fgetc(ifp);
+		if (c == EOF)
+			break;
+		fputc(c,ofp);
+	}
+
+	fclose(ifp);
+	fclose(ofp);
+
+	return 0;
+}
